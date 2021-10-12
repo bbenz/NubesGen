@@ -41,11 +41,11 @@ resource "azurerm_spring_cloud_java_deployment" "application_deployment" {
   memory_in_gb        = 1
   runtime_version     = "Java_11"
   environment_variables = {
-    "spring.profiles.active" : "prod,azure"
+    "SPRING_PROFILES_ACTIVE" = "prod,azure"
 
-    "AZURE_STORAGE_ACCOUNT_NAME" : var.azure_storage_account_name
-    "AZURE_STORAGE_ACCOUNT_KEY" : var.azure_storage_account_key
-    "AZURE_STORAGE_BLOB_ENDPOINT" : var.azure_storage_blob_endpoint
+    "AZURE_STORAGE_ACCOUNT_NAME"  = var.azure_storage_account_name
+    "AZURE_STORAGE_ACCOUNT_KEY"   = var.azure_storage_account_key
+    "AZURE_STORAGE_BLOB_ENDPOINT" = var.azure_storage_blob_endpoint
   }
 }
 
