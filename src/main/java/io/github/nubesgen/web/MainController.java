@@ -8,11 +8,6 @@ import io.github.nubesgen.service.TelemetryService;
 import io.github.nubesgen.service.compression.CompressionService;
 import io.github.nubesgen.service.compression.TarGzService;
 import io.github.nubesgen.service.compression.ZipService;
-import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -20,6 +15,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/")
@@ -158,11 +158,15 @@ public class MainController {
         } else if (application.startsWith(ApplicationType.SPRING_CLOUD.name())){
             ApplicationConfiguration applicationConfiguration = new ApplicationConfiguration();
             applicationConfiguration.setApplicationType(ApplicationType.SPRING_CLOUD);
+            if (runtime.equals(RuntimeType.DOCKER.name()) || runtime.equals(RuntimeType.DOCKER_SPRING.name())) {
+                log.debug("Docker is not supported for Azure Spring Cloud, switching to Spring by default");
+                properties.setRuntimeType(RuntimeType.SPRING);
+            }
             if (application.endsWith(Tier.BASIC.name())) {
                 applicationConfiguration.setTier(Tier.BASIC);
             } else {
                 applicationConfiguration.setTier(Tier.STANDARD);
-            } 
+            }
             properties.setApplicationConfiguration(applicationConfiguration);
         } else {
             ApplicationConfiguration applicationConfiguration = new ApplicationConfiguration();
