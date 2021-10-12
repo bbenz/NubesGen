@@ -11,11 +11,11 @@ output "azure_cosmosdb_mongodb_uri" {
 
 output "azure_cosmosdb_account_id" {
   value       = azurerm_cosmosdb_account.cosmosdb.id
-  description = "The Cosmos account resource id."
+  description = "The Cosmos DB account resource id."
 }
 
 output "azure_cosmosdb_account_key" {
   value       = azurerm_cosmosdb_account.cosmosdb.primary_key
   sensitive   = true
-  description = "The Cosmos account access key."
+  description = "The Cosmos DB account access key."
 }
